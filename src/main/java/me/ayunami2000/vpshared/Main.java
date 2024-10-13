@@ -29,7 +29,7 @@ import java.net.SocketAddress;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends ViaProxyPlugin {
-    public static final ExpiringMap<String, ConnInfo> connMap = ExpiringMap.builder().expiration(5, TimeUnit.MINUTES).build();
+    public static final ExpiringMap<String, ConnInfo> connMap = ExpiringMap.builder().expirationPolicy(ExpirationPolicy.NONE).build();
     public static boolean hasEagUtils = false;
     private static final AttributeKey<UserOptions> connAccKey = AttributeKey.newInstance("conn-acc-key");
     private static final AttributeKey<ConnInfo> connFullKey = AttributeKey.newInstance("conn-full-key");
@@ -37,6 +37,7 @@ public class Main extends ViaProxyPlugin {
     @Override
     public void onEnable() {
         (new FunnyConfig(new File("ViaLoader", "vpshared.yml"))).reload();
+        
         HttpHandler.initFiles();
         ViaProxy.EVENT_MANAGER.register(this);
     }
